@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CAP Attendance</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<h1>CAP Meeting Attendance</h1>
+
+
+<form id="attendanceForm">
+<label>Meeting Date:</label><br>
+<input type="date" name="date" required><br><br>
+
+
+<label>Your Name (Staff):</label><br>
+<input type="text" name="staff" required><br><br>
+
+
+<h3>Select Cadets Present</h3>
+
+
+<input type="checkbox" name="cadets" value="Cadet A"> Cadet A<br>
+<input type="checkbox" name="cadets" value="Cadet B"> Cadet B<br>
+<input type="checkbox" name="cadets" value="Cadet C"> Cadet C<br>
+
+
+<br>
+<button type="submit">Submit Attendance</button>
+</form>
+
+
+<p id="status"></p>
+
+
+<script>
+const form = document.getElementById('attendanceForm');
+
+
+form.addEventListener('submit', function(e) {
+e.preventDefault();
+
+
+const data = new FormData(form);
+const cadets = data.getAll('cadets');
+
+
+const payload = {
+date: data.get('date'),
+staff: data.get('staff'),
+cadets: cadets
+};
+
+
+fetch('PASTE_WEB_APP_URL_HERE', {
+method: 'POST',
+body: JSON.stringify(payload)
+})
+.then(res => res.text())
+.then(msg => {
+document.getElementById('status').innerText = 'Attendance submitted successfully.';
+form.reset();
+})
+.catch(() => {
+document.getElementById('status').innerText = 'Error submitting attendance.';
+});
+});
+</script>
+</body>
+</html>
