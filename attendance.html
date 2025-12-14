@@ -1,70 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CAP Attendance</title>
-<meta charset="UTF-8">
+  <title>CAP Attendance</title>
+  <meta charset="UTF-8">
 </head>
 <body>
+
 <h1>CAP Meeting Attendance</h1>
 
-
 <form id="attendanceForm">
-<label>Meeting Date:</label><br>
-<input type="date" name="date" required><br><br>
+  <label>Meeting Date:</label><br>
+  <input type="date" name="date" required><br><br>
 
+  <label>Staff Name:</label><br>
+  <input type="text" name="staff" required><br><br>
 
-<label>Your Name (Staff):</label><br>
-<input type="text" name="staff" required><br><br>
+  <h3>Select Cadets Present</h3>
 
+  <input type="checkbox" name="cadets" value="Cadet A"> Cadet A<br>
+  <input type="checkbox" name="cadets" value="Cadet B"> Cadet B<br>
+  <input type="checkbox" name="cadets" value="Cadet C"> Cadet C<br><br>
 
-<h3>Select Cadets Present</h3>
-
-
-<input type="checkbox" name="cadets" value="Cadet A"> Cadet A<br>
-<input type="checkbox" name="cadets" value="Cadet B"> Cadet B<br>
-<input type="checkbox" name="cadets" value="Cadet C"> Cadet C<br>
-
-
-<br>
-<button type="submit">Submit Attendance</button>
+  <button type="submit">Submit Attendance</button>
 </form>
-
 
 <p id="status"></p>
 
-
 <script>
-const form = document.getElementById('attendanceForm');
+document.getElementById('attendanceForm').addEventListener('submit', function(e) {
+  e.preventDefault(); // STOP page reload
 
+  const form = e.target;
+  const data = new FormData(form);
 
-form.addEventListener('submit', function(e) {
-e.preventDefault();
+  const payload = {
+    date: data.get('date'),
+    staff: data.get('staff'),
+    cadets: data.getAll('cadets')
+  };
 
-
-const data = new FormData(form);
-const cadets = data.getAll('cadets');
-
-
-const payload = {
-date: data.get('date'),
-staff: data.get('staff'),
-cadets: cadets
-};
-
-
-fetch('https://script.google.com/macros/s/AKfycbwcLRfFzgot85auCm3CoUrGc2gstnhI4Gd5RlDS68oeSmbc5WF768fiKJGLrngMJHR9/exec', {
-method: 'POST',
-body: JSON.stringify(payload)
-})
-.then(res => res.text())
-.then(msg => {
-document.getElementById('status').innerText = 'Attendance submitted successfully.';
-form.reset();
-})
-.catch(() => {
-document.getElementById('status').innerText = 'Error submitting attendance.';
-});
+  fetch('https://script.google.com/macros/s/AKfycbwcLRfFzgot85auCm3CoUrGc2gstnhI4Gd5R1DS68oeSmbc5WF768fiKJGlrngMJHR9/exec', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => response.text())
+  .then(text => {
+    document.getElementById('status').innerText = '✅ Attendance submitted successfully.';
+    form.reset();
+  })
+  .catch(error => {
+    document.getElementById('status').innerText = '❌ Error submitting attendance.';
+    console.error(error);
+  });
 });
 </script>
+
 </body>
 </html>
