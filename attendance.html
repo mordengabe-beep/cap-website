@@ -8,7 +8,10 @@
 
 <h1>CAP Meeting Attendance</h1>
 
-<form id="attendanceForm">
+<form 
+  method="POST"
+  action="https://script.google.com/macros/s/AKfycbwcLRfFzgot85auCm3CoUrGc2gstnhI4Gd5R1DS68oeSmbc5WF768fiKJGlrngMJHR9/exec">
+
   <label>Meeting Date:</label><br>
   <input type="date" name="date" required><br><br>
 
@@ -24,39 +27,9 @@
   <button type="submit">Submit Attendance</button>
 </form>
 
-<p id="status"></p>
-
-<script>
-document.getElementById('attendanceForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  const form = e.target;
-  const data = new FormData(form);
-
-  const payload = {
-    date: data.get('date'),
-    staff: data.get('staff'),
-    cadets: data.getAll('cadets')
-  };
-
-  fetch('https://script.google.com/macros/s/AKfycbzQepHPAo61Jo8bUSu7DJ1nske1RammFvV8_ZNCLGv8-KoXY_9vM9d1ur92w2eEB_6e/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(response => response.text())
-  .then(text => {
-    document.getElementById('status').innerText = '✅ Attendance submitted successfully.';
-    form.reset();
-  })
-  .catch(error => {
-    document.getElementById('status').innerText = '❌ Error submitting attendance.';
-    console.error(error);
-  });
-});
-</script>
+<p>
+  After submitting, you will see a confirmation page.
+</p>
 
 </body>
 </html>
