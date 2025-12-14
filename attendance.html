@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CAP Attendance</title>
-  <meta charset="UTF-8">
+<title>CAP Attendance Check-In</title>
+<meta charset="UTF-8">
 </head>
 <body>
 
-<h1>CAP Meeting Attendance</h1>
 
-<form 
-  method="POST"
-  action="https://script.google.com/macros/s/AKfycbxWtVNK_wzuXvZFWaNk3gD8d24H8TWoCKl_HYer4dxCqskUIt2pGzM5-ZL3K7RVhSCj/exec">
+<h1>CAP Cadet Attendance</h1>
 
-  <label>Meeting Date:</label><br>
-  <input type="date" name="date" required><br><br>
 
-  <label>Staff Name:</label><br>
-  <input type="text" name="staff" required><br><br>
+<form method="POST" action="PASTE_WEB_APP_URL_HERE">
 
-  <h3>Select Cadets Present</h3>
 
-  <input type="checkbox" name="cadets" value="Cadet A"> Cadet A<br>
-  <input type="checkbox" name="cadets" value="Cadet B"> Cadet B<br>
-  <input type="checkbox" name="cadets" value="Cadet C"> Cadet C<br><br>
+<label>Cadet Name (Rank + Last Name):</label><br>
+<input type="text" name="cadet" placeholder="C/Sgt Ulberg" required><br><br>
 
-  <button type="submit">Submit Attendance</button>
+
+<button type="submit">Check In</button>
 </form>
 
-<p>
-  After submitting, you will see a confirmation page.
-</p>
+
+<p>Your arrival time will be recorded automatically.</p>
+
 
 </body>
 </html>
